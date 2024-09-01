@@ -88,7 +88,7 @@ function createMonth(rota, base_rate, start_Time){
             getFinishBasic,
             calcPercent,
             date,
-            inWork
+            inWork)
         calendar.calendar.push({
             weekDay,
             day: i,
@@ -103,7 +103,7 @@ function createMonth(rota, base_rate, start_Time){
             id:addId(),
         });
     };
-
+    
     const d = getIn_OffDays(calendar);
     calendar.OFF_Days = d.off;
     calendar.IN_Days = d.in;
@@ -115,7 +115,7 @@ function createMonth(rota, base_rate, start_Time){
     calendar.IN_sun = su;
 
     // calendar.day_pay = calcEarnedForDay(calendar.rates, calcPercent, reduceFloat, start_Time);
-    calendar.basic_salary = calcEarnedFor_Month(calendar, reduceFloat);
+    calendar.basic_salary = getEarnedFor_Month(calendar, reduceFloat);
 
     const rates = calendar.rates
     rates.nights.rate = reduceFloat(calcPercent(rates.basic, rates.nights.percent))
@@ -131,7 +131,7 @@ const rota = {
     OffDays: [3, 6, 7, 13, 14, 20, 21, 27, 28],
 };
 const rota2 = {
-    date: [09, 2022],
+    date: [09,2022],
     OffDays: ['Monday', 'Tuesday'],
 };
 
