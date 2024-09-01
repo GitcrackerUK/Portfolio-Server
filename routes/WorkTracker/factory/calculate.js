@@ -1,7 +1,19 @@
 const moment = require('moment');
 
-function getHoursFromStart( getFinishBasic, start_Time ){
+function getOnlyDate(date){
+    return moment(date).format('YYYY-MM-DD');
+}
 
+function getOnlyTime(date){
+    return moment(date).format('HH:mm');
+}
+
+function getDuration(a,b){
+    return a.diff(b,'minutes') / 60
+}
+
+function getHoursFromStart( getFinishBasic, getDuration, start_Time ){
+    
     // moment methods used in this function:
     //  - a.from(b)
     //  - [before].isBefore([after]) true
@@ -12,10 +24,6 @@ function getHoursFromStart( getFinishBasic, start_Time ){
 
     function returnTime(date,h,m){
         return moment(date).hour(h).minute(m);
-    }
-
-    function getDifference(a,b){
-        return a.diff(b,'minutes') / 60
     }
 
     const startTime = moment(start_Time);
@@ -68,32 +76,32 @@ function getHoursFromStart( getFinishBasic, start_Time ){
             times.dayHours = finishBasicTime.diff(start_Time,'minutes') / 60;
         }
         else if (start_Time.isAfter(dayRateTime) && finishBasicTime.isSameOrAfter(nightRateTime) && finishBasicTime.isSameOrBefore(moment(weekendRateTime).add(1,'day'))){
-            times.dayHours = getDifference(nightRateTime,start_Time);
-            times.nightHours = getDifference(finishBasicTime,nightRateTime);
+            times.dayHours = getDuration(nightRateTime,start_Time);
+            times.nightHours = getDuration(finishBasicTime,nightRateTime);
         }else if ( start_Time.isAfter(dayRateTime) && start_Time.isBefore(nightRateTime) && finishBasicTime.isAfter(moment(weekendRateTime).add(1,'day'))){
-            times.dayHours = getDifference(nightRateTime,start_Time);
-            times.nightHours = getDifference(moment(weekendRateTime).add(1,'day'),start_Time) - times.dayHours;
-            times.weekendHours = getDifference(finishBasicTime,moment(weekendRateTime).add(1,'day'))
+            times.dayHours = getDuration(nightRateTime,start_Time);
+            times.nightHours = getDuration(moment(weekendRateTime).add(1,'day'),start_Time) - times.dayHours;
+            times.weekendHours = getDuration(finishBasicTime,moment(weekendRateTime).add(1,'day'))
         }else if ( start_Time.isSameOrAfter(nightRateTime) && finishBasicTime.isAfter(moment(dayRateTime).add(1,'day'))){
-            times.nightHours = getDifference(moment(weekendRateTime).add(1,'day'),start_Time);
-            times.weekendHours = getDifference(finishBasicTime,moment(weekendRateTime).add(1,'day'))
+            times.nightHours = getDuration(moment(weekendRateTime).add(1,'day'),start_Time);
+            times.weekendHours = getDuration(finishBasicTime,moment(weekendRateTime).add(1,'day'))
         }
     }
     function saturday(start_Time){
         if(start_Time.isAfter(weekendRateTime) && start_Time.isBefore(moment(weekendRateTime).add(1,'day'))){
-            times.weekendHours = getDifference(finishBasicTime, start_Time)
+            times.weekendHours = getDuration(finishBasicTime, start_Time)
         }
     }
     function sunday(start_Time){
         if( start_Time.isAfter(weekendRateTime) && finishBasicTime.isSameOrBefore(moment(weekendRateTime).add(1,'day'))){
-            times.weekendHours = getDifference(finishBasicTime,start_Time)
+            times.weekendHours = getDuration(finishBasicTime,start_Time)
         }else if( start_Time.isAfter(weekendRateTime) && finishBasicTime.isAfter(moment(weekendRateTime).add(1,'day'))){
-            times.weekendHours = getDifference(moment(weekendRateTime).add(1,'day'), start_Time);
-            times.nightHours = getDifference(finishBasicTime,moment(weekendRateTime).add(1,'day'))
+            times.weekendHours = getDuration(moment(weekendRateTime).add(1,'day'), start_Time);
+            times.nightHours = getDuration(finishBasicTime,moment(weekendRateTime).add(1,'day'))
         }else if( start_Time.isBefore(moment(weekendRateTime).add(1,'day')) && finishBasicTime.isAfter(moment(dayRateTime).add(1,'day'))){
-            times.weekendHours = getDifference(weekendRateTime, start_Time);
-            times.nightHours = getDifference(finishBasicTime,moment(weekendRateTime).add(1,'day')) /// need to be finished !!!
-            times.dayHours = getDifference(moment(finishBasicTime).add(1,'day'),moment(dayRateTime).add(1,'day'))
+            times.weekendHours = getDuration(weekendRateTime, start_Time);
+            times.nightHours = getDuration(finishBasicTime,moment(weekendRateTime).add(1,'day')) /// need to be finished !!!
+            times.dayHours = getDuration(moment(finishBasicTime).add(1,'day'),moment(dayRateTime).add(1,'day'))
         }
     }
 
@@ -127,21 +135,83 @@ function getFinishBasic(start_Time){
     return moment(start_Time).add(9,'hours').add(15,'minutes')
 }
 
-function getEarnedFor_Month(cal) {
-    let calendar = [];
+function calcPayDay(F_Y) {
 
-    calendar = cal.map((element, i) => {
-
-        return {
-            month:null,
-            from:null,
-            to:null,
-            earned:null,
-        }
+    let reducedYear = [];
+    let yearPD = [];
+    let year = [];
+    
+    F_Y.forEach((ele, i) => {
+        // looping over 12 months 
+        let calendar = ele.calendar
+        let PD = 0;
+        let prePD = 0;
+        let postPD = 0;
+        let month = {
+            name:null,
+            calendar:[]
+        };
+        month.name = ele.name
+        calendar.forEach((day,i)=>{
+            // loops over days 
+            if(day.payDay){
+                PD = day.day
+            }
+            if(!PD){
+                prePD = reduceFloat(day.earnedFromHours.TotalEarned + prePD)
+            }else if(PD){
+                postPD = reduceFloat(day.earnedFromHours.TotalEarned + postPD)
+            }
+            month.calendar.push({
+                weekday:day.day,
+                pay:day.earnedFromHours.TotalEarned,
+                prePD,
+                postPD,
+            })
+        })
+        year.push(month);
     });
 
-    return calendar;
+    year.forEach((month, i) => {
+        let prePD = month.calendar[month.calendar.length - 1].prePD;
+        let postPD = month.calendar[month.calendar.length - 1].postPD;
+        let name = month.name;
+        reducedYear.push({name, prePD, postPD});
+    });
+
+    reducedYear.forEach((m,i)=>{
+        let PD ;
+        let N = m.name;
+        if(reducedYear[i-1]){
+          PD = reduceFloat(reducedYear[i-1].postPD + m.prePD)
+          yearPD.push({
+            N,
+            PD
+        })
+        } else if (!reducedYear[i-1]){
+          PD = m.prePD;
+          yearPD.push({
+            N,
+            PD
+        })
+        }
+    })
+
+    F_Y.forEach((month,i)=>{
+        yearPD.forEach((pay_Day,i)=>{
+            let basic = pay_Day.PD
+            if(month.name === pay_Day.N){
+                month.calendar.forEach((day,i)=>{
+                    if(day.payDay){
+                        day.payDay = {basic}
+                    }
+                })
+            }
+        })
+    })
+    return F_Y
 }
+
 function getEarnedFor_Month(payload, reduceFloat){
     let pay = payload.day_pay
     
@@ -166,6 +236,7 @@ function getEarnedFor_Month(payload, reduceFloat){
 function calcEarnedForDay(
     rates,
     getHoursFromStart,
+    getDuration,
     getFinishBasic,
     calc,
     start_Time,
@@ -189,9 +260,8 @@ function calcEarnedForDay(
         };
 
     const { basic, nights, weekends } = rates;
-
-    if(in_Work){
-        payload.times = getHoursFromStart( getFinishBasic , start_Time);
+        if(in_Work){
+        payload.times = getHoursFromStart( getFinishBasic, getDuration, start_Time);
         let times = payload.times;
         payload.earned.nightEarned = payload.times.nightHours ? calculateEarned(basic, nights.percent, times.nightHours, reduceFloat, calc) : null;
         payload.earned.dayEarned = payload.times.dayHours ? calculateEarned(basic, 0 ,times.dayHours, reduceFloat, calc) : null;
@@ -202,16 +272,6 @@ function calcEarnedForDay(
         
     return payload;
 }
-function getOvertime(finish_Time){
-    let finishTime = '';
-    let overtimeTotal = '';
-    if(finish_Time){
-        finishTime = moment(finish_Time);
-        overtimeTotal = checkDurationTime(startTime, finish_Time) - returnTime(startTime,9,15) /// initial 
-    }
-}
-
-
 
 function getTotalEarned(obj,reduceFloat){
     let i = 0;
@@ -222,8 +282,8 @@ function getTotalEarned(obj,reduceFloat){
     })
     return reduceFloat(i)
 }
+
 function calculateEarned( basic, percent , time, reduceF, calc){
-    // console.log(basic, percent , time, reduceF, calc);
     return reduceF(calc(basic,percent) * time )
 }
 function countDays(obj){
@@ -266,12 +326,116 @@ function getIn_OffDays(calendar){
 function reduceFloat(payload){
     return parseFloat(payload.toFixed(2))
 }
+
 function calcPercent(basic,extraRate){
     let extra = 0 
     if(extraRate){
         extra = (basic / 100) * extraRate
     }
     return basic + extra
+}
+
+function addOvertimeToDay(cal, finish_Overtime, getOnlyDate, getOnlyTime, getDuration, calc, rates, addOvertimesToPayDay){
+    const OV_date = getOnlyDate(finish_Overtime);
+    const OV_time = getOnlyTime(finish_Overtime);
+
+    cal.forEach((M)=>{
+        M.calendar.forEach((D)=>{
+            if(getOnlyDate(D.date) === OV_date){
+                const overtimeDuration = getDuration(moment(finish_Overtime).add(1,'day'), D.date) - 9.25
+                D.finishOvertime = OV_time === D.finishBasic ? null : OV_time;
+                D.hours.overtime = overtimeDuration >= 0.25 ? overtimeDuration : null;
+                D.earnedFromHours.overtimeEarned = reduceFloat(D.hours.overtime  * calc(rates.base, rates.overtime))
+                D.earnedFromHours.TotalEarned = reduceFloat( D.earnedFromHours.TotalEarned + D.earnedFromHours.overtimeEarned )
+            }
+        })
+    });
+    // Is it good idea to update pay day as overtime is added ?
+    //  YES
+    // Will do test fail ?
+    //  NO, as test for addOvertimeToDay check if overtime is added to specific day and doesn't change anything previously set up.
+    // What Can I do ??
+    //  I can update tests. 
+    return addOvertimesToPayDay(cal);
+}
+
+function addOvertimesToPayDay(cal){
+
+        let reducedYear = [];
+        let yearCOD = [];
+        let year = [];
+        
+        cal.forEach((ele, i) => {
+            // looping over 12 months 
+            let calendar = ele.calendar
+            let COD = 0;
+            let preCOD = 0;
+            let postCOD = 0;
+            let month = {
+                name:null,
+                calendar:[]
+            };
+            month.name = ele.name
+            calendar.forEach((day,i)=>{
+                // loops over days 
+                if(day.cutOffDay){
+                    COD = day.day
+                }
+                if(!COD){
+                    preCOD = reduceFloat(day.earnedFromHours.overtimeEarned + preCOD)
+                }else if(COD){
+                    postCOD = reduceFloat(day.earnedFromHours.overtimeEarned + postCOD)
+                }
+                month.calendar.push({
+                    weekday:day.day,
+                    pay:day.earnedFromHours.overtimeEarned,
+                    preCOD,
+                    postCOD,
+                })
+            })
+            year.push(month);
+        });
+    
+        year.forEach((month, i) => {
+            let preCOD = month.calendar[month.calendar.length - 1].preCOD;
+            let postCOD = month.calendar[month.calendar.length - 1].postCOD;
+            let name = month.name;
+            reducedYear.push({name, preCOD, postCOD});
+        });
+    
+        reducedYear.forEach((m,i)=>{
+            let COD ;
+            let N = m.name;
+            if(reducedYear[i-1]){
+              COD = reduceFloat(reducedYear[i-1].postCOD + m.preCOD)
+              yearCOD.push({
+                N,
+                COD
+            })
+            } else if (!reducedYear[i-1]){
+              COD = m.preCOD;
+              yearCOD.push({
+                N,
+                COD
+            })
+            }
+        })
+    
+        cal.forEach((month,i)=>{
+            yearCOD.forEach((pay_Day,i)=>{
+                let overtime = pay_Day.COD
+
+                if(month.name === pay_Day.N){
+                    month.calendar.forEach((day,i)=>{
+                        let total = day.payDay.basic + overtime 
+                        if(day.payDay){
+                            day.payDay = {...day.payDay, overtime, total}
+                        }
+                    })
+                }
+            })
+        })
+    return cal;
 }
 
 module.exports = {
@@ -284,4 +448,10 @@ module.exports = {
     reduceFloat,
     getFinishBasic,
     getHoursFromStart,
+    getDuration,
+    calcPayDay,
+    addOvertimeToDay,
+    getOnlyTime,
+    getOnlyDate,
+    addOvertimesToPayDay,
 }

@@ -4,7 +4,7 @@
     "description": "Backend for Portfolio",
     "main": "server.js",
     "scripts": {
-        "dev":"jest && node ./routes/WorkTracker/Tracker.js",
+        "dev": "jest && node ./routes/WorkTracker/Tracker.js",
         "test": "jest",
         "start": "node server.js",
         "live": "nodemon --ext js server.js",
@@ -15,9 +15,12 @@
     "dependencies": {
         "@google-cloud/functions-framework": "^1.7.1",
         "axios": "^0.21.1",
+        "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "json": "^11.0.0",
+        "jsonwebtoken": "^8.5.1",
         "livereload": "^0.9.1",
         "moment": "^2.29.4",
         "mongodb": "^3.6.4",

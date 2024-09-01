@@ -8,7 +8,6 @@ router.route('/').post((req, res) => {
     res.send(
         !req.body.Email ? `No email specified` : `Data received to a server.`
     )
-    console.log(req.body)
     if (req.body.Email) {
         const senderEmail = req.body.Email
         const senderName = req.body.FirstName

@@ -118,10 +118,10 @@ function getCombinations(weekCombinations, createMonth){
         }
        result.push(createMonth(rota))
     })
-    return result
+    return result;
 };
 
-function createYearCalendar(rota, getMonthNumber, createMonth){
+function createYearCalendar(rota, getMonthNumber, createMonth, calcPayDay, baseNewRate, start_Time){
     let yearCalendar = [ ]
     const year22 = 2022;
     const year23 = 2023;
@@ -147,11 +147,11 @@ function createYearCalendar(rota, getMonthNumber, createMonth){
             createMonth({
                 date,
                 OffDays
-            })
+            },baseNewRate, start_Time)
         )
         }
 
-    return yearCalendar
+    return calcPayDay(yearCalendar);
 };
 
 module.exports = {

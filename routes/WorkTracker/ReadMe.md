@@ -1,15 +1,71 @@
-# ToDo
+# Work Tracker
 
-- [ ] Get earnings from selected pay day to following pay day.
-- [ ] Get overtimes from selected cut off day to following.
-- [ ] Add overtimes to pay day.
+    App to record work hours and generate earnings.
+    At the moment application:
+    - Gets start time and calculate earnings for the day based on the rate and extra shift allowance.
+    - Gets rota combination and calculate days at work.
+    - Returns object representation of full year with days at work, of days, earnings.
+
+## Questions
+
+- What should be base calendar object.
+    There shouldn't be base calendar object.
+    Every calendar object should be unique for every user.
+- How calendar object should be initialized ?
+    User should on the client side choose rota and start time and then send request to the back-end to generate calendar object and then save it in the DB. This calendar object should be assigned to the user.
+- Where should be stored based calendar object.
+    There should be uniq calendar object for every user. It should be initialized for every new user and then updated every single time when user add:
+    - extra time/overtime.
+    - extra days
+    - absence day at work.
+- User should has in the DB:
+    - username.
+    - email.
+    - password.
+    - uuid.
+    In the case of user not being in the DB, they should be added to the db with the uuid.
+- What should be a structure of DB for all app ?
+    App for sure needs object with users and assigned to them calendar objects.
+    [
+        {
+            user: topmax12,
+            email:sfsf@fs.com,
+            password:12233,
+            calendar:[]
+        }
+    ]
+
+## ToDo
+
+- [ ] test addOvertimesToPayDay.
+- [ ] add login route to WorkTracker.
+- [ ] add register route to WorkTracker.
+- [ ] connect backend to mongo DB.
+- [ ] test connection to DB and schema.
+- [ ] functionality to save new user without calendar.
+- [ ] functionality to get user with calendar object.
+- [ ] functionality to check if user exist.
+- [ ] add DB to save user obj with calendar obj.
+- [ ] count weekdays, fridays, saturdays, sundays.
+- [ ] add counted days to calendar object.
+- [ ] functionality to update user credential.
 - [ ] Add test to check all week, 7 days and 24h for every day in the week to check start time. Test should loop over 24 hours and check if sum of the hours is 9.25.
 - [ ] Test earnings from selected start time.
-- [ ] Create functionality to calculate overtimes.
 - [ ] Refactor getNameOfWeekDay as it probably can be one liner.
 - [ ] Refactor calcPercent and add to this function "reduceFloat" to avoid repeating use of "reduceFloat".
 - [ ] Add functionality to extractDateFromString to extract year/month (at the moment extracts month/year) and return in correct form for moment js. Functionality need detect where year is passed, as a first or as a second argument.
 - [ ] Reduce getNameOfWeekDay by moving this function below returnDate and pass only date argument which has correct day and time.
+- [x] fixed issue with multiple connection to mongo DB collections.
+- [x] Get overtimes from selected cut off day to following.
+- [x] Create functionality to calculate overtimes.
+- [x] functionality to update calendar.
+- [x] Change specific day finish time, and calculate earnings for the day and for the month.
+- [x] test addOvertimeToDay
+- [x] Add overtimes to pay day.
+- [x] create schema for the calendar obj.
+- [x] create schema for the user obj.
+- [x] Get earnings from selected pay day to following pay day.
+- [x] Add earnings for period between previous payday till current pay day to object calendar key payDay.
 - [x] Split factory.js into three separate files createCalendar.js calculate.js development.js
 - [x] Split factory.test.js into three separate files createCalendar.js calculate.js development.js
 - [x] Create function to check if all year rota is present in the fullYearCalendar.json and if not, save all year calendar to this file. If calendar exists do not rewrite. It is to mimic Data Base.
