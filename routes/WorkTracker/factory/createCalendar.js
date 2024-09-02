@@ -121,18 +121,17 @@ function getCombinations(weekCombinations, createMonth){
     return result;
 };
 
-function createYearCalendar(rota, getMonthNumber, createMonth, calcPayDay, baseNewRate, start_Time){
+function createYearCalendar(rota, getMonthNumber, createMonth, calcPayDay, baseNewRate, start_Time, year){
     let yearCalendar = [ ]
-    const year22 = 2022;
-    const year23 = 2023;
-    let date = [year22];
+    const yearPlus = year + 1;
+    let date = [year];
     let OffDays = [];
     for( const prop in rota){
         let monthN = getMonthNumber(prop)
 
         if(monthN <= 3 ){
             date.pop();
-            date.push(year23);
+            date.push(yearPlus);
         }
 
         if(date.length === 1){
