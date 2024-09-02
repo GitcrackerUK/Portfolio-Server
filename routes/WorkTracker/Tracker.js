@@ -39,7 +39,7 @@ const {
 
 const {writeToResults,writeFullYear, checkIfOvertime} = require('./factory/development'); // development
 
-const { Rota22_23, Rota23_24, baseOldRate, baseNewRate, weekCombinations, rates } = require('./store/store.js');
+const { Rota24_25, baseCurrentRate, weekCombinations, rates } = require('./store/store.js');
 const FY = require('./store/fullYearCalendar.json');
 const moment = require('moment');
 
@@ -101,13 +101,9 @@ function createMonth(rota, base_rate, start_Time){
             getFinishBasic,
             calcPercent,
             date,
-<<<<<<< HEAD
-            inWork)
-=======
             reduceFloat,
             inWork
              );
->>>>>>> abc8f3c100f7a24b94d2b1ceb7cc872d7098d0d4
         calendar.calendar.push({
                 date,
                 weekDay,
@@ -135,11 +131,7 @@ function createMonth(rota, base_rate, start_Time){
     calendar.IN_sun = su;
 
     // calendar.day_pay = calcEarnedForDay(calendar.rates, calcPercent, reduceFloat, start_Time);
-<<<<<<< HEAD
-    calendar.basic_salary = getEarnedFor_Month(calendar, reduceFloat);
-=======
     // calendar.basic_salary = calcEarnedFor_Month(calendar, reduceFloat);
->>>>>>> abc8f3c100f7a24b94d2b1ceb7cc872d7098d0d4
 
     const rates = calendar.rates;
     rates.nights.rate = reduceFloat(calcPercent(rates.basic, rates.nights.percent));
@@ -150,7 +142,7 @@ function createMonth(rota, base_rate, start_Time){
     return calendar;
 }
 
-<<<<<<< HEAD
+
 const rota = {
     date: ['09/2022'],
     OffDays: [3, 6, 7, 13, 14, 20, 21, 27, 28],
@@ -159,7 +151,7 @@ const rota2 = {
     date: [09,2022],
     OffDays: ['Monday', 'Tuesday'],
 };
-=======
+
 router.get('/', (req, res) => {
     res.send('Tracker router');
 });
@@ -168,14 +160,16 @@ router.use('/register', register);
 router.use('/login', login);
 
 const startTime = '17:00';
-const overtime = moment([2022,09,11,04,15])
-let overtime1 = moment([2022,09,12,04,15])
->>>>>>> abc8f3c100f7a24b94d2b1ceb7cc872d7098d0d4
 
-const yearEarnings = createYearCalendar(fullYearRota, getMonthNumber, createMonth, calcPayDay, baseNewRate, startTime);
+const overtime = moment([2024,7,30,4,15,'DD,MM,YY,HH,MM'])
+const overtime1 = moment([2024,7,31,4,15,'DD,MM,YY,HH,MM'])
 
-let overtimes = checkIfOvertime(yearEarnings);
+
+const yearEarnings = createYearCalendar(Rota24_25, getMonthNumber, createMonth, calcPayDay, baseCurrentRate, startTime,2024);
+writeFullYear(yearEarnings,'fullYear24_25.json')
+
 const editedCalc = addOvertimeToDay(yearEarnings, overtime, getOnlyDate, getOnlyTime, getDuration, calcPercent, rates, addOvertimesToPayDay);
-let editedCalc1 = addOvertimeToDay(editedCalc, overtime1, getOnlyDate, getOnlyTime, getDuration, calcPercent, rates, addOvertimesToPayDay);
-
+let overtimes = checkIfOvertime(yearEarnings);
+console.log(overtimes);
+writeFullYear(editedCalc,'fullYear24_25.json')
 module.exports = router

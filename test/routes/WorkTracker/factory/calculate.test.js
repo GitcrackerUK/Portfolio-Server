@@ -25,7 +25,7 @@ describe('Test of the function calcEarnedForDay. It should return object with ho
     };
     (()=>{
         let key = 'times'
-        let startTime = moment([2022,09,16,22,30])
+        let startTime = moment([2022,9,16,22,30])
         return test(`It should have key '${key}'`, ()=>{
             expect(calcEarnedForDay(
                 rates,
@@ -40,7 +40,7 @@ describe('Test of the function calcEarnedForDay. It should return object with ho
 
     (()=>{
         let key = 'earned'
-        let startTime = moment([2022,09,16,22,30])
+        let startTime = moment([2022,9,16,22,30])
         return test(`It should have key '${key}'`, ()=>{
             expect(calcEarnedForDay(
                 rates,
@@ -77,7 +77,7 @@ describe('Check if function addOvertimeToDay adds finish time for overtime and c
     (()=>{
             const overtime = 1
             const earned = overtime * calcPercent(rates.base, rates.overtime)
-            const finishTime = moment([2022,09,10,03,15])
+            const finishTime = moment([2022,9,10,3,15])
             const date = getOnlyDate(finishTime);
             const time = getOnlyTime(finishTime);
             return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{
@@ -95,7 +95,7 @@ describe('Check if function addOvertimeToDay adds finish time for overtime and c
     (()=>{
             const overtime = 2
             const earned = overtime * calcPercent(rates.base, rates.overtime)
-            const finishTime = moment([2022,09,10,04,15])
+            const finishTime = moment([2022,9,10,4,15])
             const date = getOnlyDate(finishTime);
             const time = getOnlyTime(finishTime);
             return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{
@@ -113,7 +113,7 @@ describe('Check if function addOvertimeToDay adds finish time for overtime and c
     (()=>{
             const overtime = 2.5
             const earned = overtime * calcPercent(rates.base, rates.overtime)
-            const finishTime = moment([2022,09,10,04,45])
+            const finishTime = moment([2022,9,10,4,45])
             const date = getOnlyDate(finishTime);
             const time = getOnlyTime(finishTime);
             return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{
@@ -131,7 +131,7 @@ describe('Check if function addOvertimeToDay adds finish time for overtime and c
     (()=>{
             const overtime = 3.5
             const earned = overtime * calcPercent(rates.base, rates.overtime)
-            const finishTime = moment([2022,09,10,05,45])
+            const finishTime = moment([2022,9,10,5,45])
             const date = getOnlyDate(finishTime);
             const time = getOnlyTime(finishTime);
             return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{
@@ -149,7 +149,7 @@ describe('Check if function addOvertimeToDay adds finish time for overtime and c
     (()=>{
             const overtime = 4.5
             const earned = overtime * calcPercent(rates.base, rates.overtime)
-            const finishTime = moment([2022,09,10,06,45])
+            const finishTime = moment([2022,9,10,6,45])
             const date = getOnlyDate(finishTime);
             const time = getOnlyTime(finishTime);
             return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{
@@ -167,7 +167,7 @@ describe('Check if function addOvertimeToDay adds finish time for overtime and c
     (()=>{
             const overtime = null
             const earned = overtime * calcPercent(rates.base, rates.overtime)
-            const finishTime = moment([2022,09,10,00,45])
+            const finishTime = moment([2022,9,10,0,45])
             const date = getOnlyDate(finishTime);
             const time = getOnlyTime(finishTime);
             return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{
@@ -191,7 +191,7 @@ describe('Check if function addOvertimesToPayDay adds overtime earnings to payDa
     // check to which payDay overtime should be added 
     // compare expectation with calendar object
     const overtime = null
-    const finishTime = moment([2022,09,05,03,45])
+    const finishTime = moment([2022,9,5,3,45])
     const earned = overtime * calcPercent(rates.base, rates.overtime)
     const date = getOnlyDate(finishTime);
     return test(`Should add ${overtime} to overtime and calculate ${earned}`, ()=>{

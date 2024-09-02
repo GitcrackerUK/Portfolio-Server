@@ -1,8 +1,9 @@
 const baseOldRate = 14.98
 const baseNewRate = 16.75
+const baseCurrentRate = 18.02
 
 const rates = {
-    base:16.75,
+    base:18.02,
     night:25,
     weekend:30,
     overtime:50
@@ -37,6 +38,20 @@ const Rota23_24 = {
     February:[4,10,11,12,18,19,25],
     March:[2,3,9,10,16,19,20,26,27]
 }
+const Rota24_25 = {
+    April: [2,3,9,10,14,20,21,22,28,29],
+    May: [5,11,12,18,19,25,28,29],
+    Jun: [4,5,11,12,18,19,23,29,30],
+    July: [1,7,8,14,20,21,27,28],
+    August: [3,6,7,13,14,20,21,27,28],
+    September:[1,7,8,9,15,16,22,28,29],
+    October: [5,6,12,15,16,22,23,29,30],
+    November:[5,6,10,16,17,18,24,25],
+    December:[1,7,8,14,15,21,24,25,31],
+    January: [1,7,8,14,15,19,25,26,27],
+    February:[2,3,9,15,16,22,23],
+    March:[1,4,5,11,12,18,19,25,26,30]
+}
 
 const weekCombinations = [
     ['Monday','Tuesday'],
@@ -64,9 +79,7 @@ const weekCombinations = [
 
 module.exports = {
     weekCombinations,
-    Rota22_23,
-    Rota23_24,
-    baseOldRate,
-    baseNewRate,
+    Rota24_25,
+    baseCurrentRate,
     rates
 }
