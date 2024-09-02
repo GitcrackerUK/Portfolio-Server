@@ -148,7 +148,7 @@ const rota = {
     OffDays: [3, 6, 7, 13, 14, 20, 21, 27, 28],
 };
 const rota2 = {
-    date: [09,2022],
+    date: [9,2022],
     OffDays: ['Monday', 'Tuesday'],
 };
 
@@ -161,9 +161,7 @@ router.use('/login', login);
 
 const startTime = '17:00';
 
-const overtime = moment([2024,7,30,4,15,'DD,MM,YY,HH,MM'])
-const overtime1 = moment([2024,7,31,4,15,'DD,MM,YY,HH,MM'])
-
+const overtime = moment([2024,07,30,4,15])
 
 const yearEarnings = createYearCalendar(Rota24_25, getMonthNumber, createMonth, calcPayDay, baseCurrentRate, startTime,2024);
 writeToFile(yearEarnings,'fullYear24_25.json')
