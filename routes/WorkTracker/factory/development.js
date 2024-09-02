@@ -1,7 +1,7 @@
 const fs = require('fs');
 // const FY = require('../store/fullYearCalendar.json');
 
-function writeFullYear(payload,fileName) {
+function writeToFile(payload,fileName) {
         const p = JSON.stringify(payload);
         fs.writeFile(`${__dirname}/../store/${fileName}`, p, (err) => {
             if (err) {
@@ -43,6 +43,6 @@ function checkIfOvertime(cal){
 
 module.exports = {
     writeToResults,
-    writeFullYear,
+    writeToFile,
     checkIfOvertime,
 }

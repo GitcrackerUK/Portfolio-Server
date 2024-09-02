@@ -37,7 +37,7 @@ const {
     addOvertimesToPayDay,
 } = require('./factory/calculate.js'); // calculate earnings
 
-const {writeToResults,writeFullYear, checkIfOvertime} = require('./factory/development'); // development
+const {writeToResults,writeToFile, checkIfOvertime} = require('./factory/development'); // development
 
 const { Rota24_25, baseCurrentRate, weekCombinations, rates } = require('./store/store.js');
 const FY = require('./store/fullYearCalendar.json');
@@ -166,10 +166,12 @@ const overtime1 = moment([2024,7,31,4,15,'DD,MM,YY,HH,MM'])
 
 
 const yearEarnings = createYearCalendar(Rota24_25, getMonthNumber, createMonth, calcPayDay, baseCurrentRate, startTime,2024);
-writeFullYear(yearEarnings,'fullYear24_25.json')
+writeToFile(yearEarnings,'fullYear24_25.json')
 
 const editedCalc = addOvertimeToDay(yearEarnings, overtime, getOnlyDate, getOnlyTime, getDuration, calcPercent, rates, addOvertimesToPayDay);
-let overtimes = checkIfOvertime(yearEarnings);
-console.log(overtimes);
-writeFullYear(editedCalc,'fullYear24_25.json')
+let overtimes = checkIfOvertime(editedCalc);
+
+writeToFile(overtimes,'overtimes.json')
+
+writeToFile(editedCalc,'fullYear24_25.json')
 module.exports = router
