@@ -165,8 +165,14 @@ const rota2 = {
 
 
 router.get('/', (req, res) => {
+    console.log(req.body);
     res.send('Tracker router');
 });
+
+router.post('/', (req,res,next) => { 
+    console.log('loading.');
+    res.send('Post workTracker!!----->');
+})
 
 router.use('/register', register);
 router.use('/login', login);
