@@ -16,6 +16,7 @@ const login = require('./routes/login');
     addPDandCOD,
     findPayDays,
     returnDate,
+    getYear,
     checkIN,
     addId,
 } = require('./factory/createCalendar'); // initializing calendar obj

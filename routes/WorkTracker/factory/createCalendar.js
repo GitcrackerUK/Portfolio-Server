@@ -16,6 +16,9 @@ function getMonthNumber(name){
 function getDayNumber(day){
     return moment().date(day)
 }
+function getYear(date){
+    return moment().year(date)
+}
 
 function getNameOfWeekDay(payload,i){
     const a = moment(payload).date(i)
@@ -235,4 +238,5 @@ module.exports = {
     addPDandCOD,
     addId,
     getDayNumber,
+    getYear,
 };
