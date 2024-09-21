@@ -152,6 +152,18 @@ const rota2 = {
     OffDays: ['Monday', 'Tuesday'],
 };
 
+// This is express Api for workTracker which will be used to send tax year
+// rota and will be used to fetch full tax year of data, to front end to fill
+// up calendar page.
+
+// What I need to do ? 
+// I need to:
+// 1. Create Api request sent form front-end to server
+// 2. Create functionality to receive the front-end request.
+// 3. Use rota from the request to generate the full year of data.
+// 4. Send the full year of the data to the front-end within the same request.
+
+
 router.get('/', (req, res) => {
     res.send('Tracker router');
 });
