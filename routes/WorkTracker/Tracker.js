@@ -12,6 +12,7 @@ const login = require('./routes/login');
     getCombinations,
     getMonthNumber,
     getMonthName,
+    getDayNumber,
     addPDandCOD,
     findPayDays,
     returnDate,

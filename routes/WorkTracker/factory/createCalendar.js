@@ -13,6 +13,9 @@ function getMonthName(m){
 function getMonthNumber(name){
     return moment().month(name).format("M");
 };
+function getDayNumber(day){
+    return moment().date(day)
+}
 
 function getNameOfWeekDay(payload,i){
     const a = moment(payload).date(i)
@@ -231,4 +234,5 @@ module.exports = {
     createYearCalendar,
     addPDandCOD,
     addId,
+    getDayNumber,
 };
