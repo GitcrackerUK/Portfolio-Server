@@ -1,6 +1,8 @@
 .vscode
 .env
 app.yaml
+overtimes.json
+fullYear24_25.json
 
 # dependencies
 /node_modules
