@@ -5,7 +5,7 @@ require('dotenv').config();
 const register = require('./routes/register');
 const login = require('./routes/login');
 
-const { 
+    convertDaysArrayIntoRota,
     extractDateFromString,
     createYearCalendar,
     getNameOfWeekDay,
