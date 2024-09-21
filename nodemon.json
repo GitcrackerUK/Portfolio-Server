@@ -1,0 +1,15 @@
+{
+  "watch": ["server", "config"],
+  "ext": "js,json",
+  "ignore": [
+    "node_modules",
+    "logs",
+    "routes/WorkTracker/store/overtimes.json",
+    "routes/WorkTracker/store/fullYear24_25.json",
+    "*.log",
+    "temp/*",
+    "*.tmp"
+  ],
+  "exec": "node server.js",
+  "legacyWatch": true
+}
