@@ -2,6 +2,9 @@
 .env
 app.yaml
 
+fullYear24_25.json
+overtimes.json
+
 # dependencies
 /node_modules
 /.pnp
