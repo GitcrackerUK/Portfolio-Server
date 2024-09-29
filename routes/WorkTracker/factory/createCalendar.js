@@ -119,7 +119,7 @@ function getCombinations(weekCombinations, createMonth){
     let result = []
     weekCombinations.forEach((i)=>{
         const rota = {
-            date:[09,2022],
+            date:[9,2022],
             OffDays:i
         }
        result.push(createMonth(rota))
