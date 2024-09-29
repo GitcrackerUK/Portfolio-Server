@@ -20,10 +20,9 @@ function getYear(date){
     return moment().year(date)
 }
 
-function getNameOfWeekDay(payload,i){
-    const a = moment(payload).date(i)
-    return moment(a).format('dddd')
-};
+function getNameOfWeekDay(payload, i) {
+    return moment(payload).date(i).format('dddd');
+}
 
 function extractDateFromString(str){
     let date = [];
