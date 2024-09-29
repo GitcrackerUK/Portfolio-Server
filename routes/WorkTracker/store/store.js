@@ -9,6 +9,24 @@ const rates = {
     overtime:50
 }
 
+const emptyRota = {
+    year: null,
+    months: {
+        April: [],
+        May: [],
+        Jun: [],
+        July: [],
+        August: [],
+        September: [],
+        October: [],
+        November: [],
+        December: [],
+        January: [],
+        February: [],
+        March: []
+    }
+}
+  
 const Rota22_23 = {
     April: [null],
     May: [1,4,10,11,15,21,22,23,29,30],

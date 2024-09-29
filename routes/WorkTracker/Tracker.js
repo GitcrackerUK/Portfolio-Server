@@ -4,17 +4,19 @@ require('dotenv').config();
 
 const register = require('./routes/register');
 const login = require('./routes/login');
-
-const { 
+const {
+    convertDaysArrayIntoRota,
     extractDateFromString,
     createYearCalendar,
     getNameOfWeekDay,
     getCombinations,
     getMonthNumber,
     getMonthName,
+    getDayNumber,
     addPDandCOD,
     findPayDays,
     returnDate,
+    getYear,
     checkIN,
     addId,
 } = require('./factory/createCalendar'); // initializing calendar obj

@@ -13,6 +13,12 @@ function getMonthName(m){
 function getMonthNumber(name){
     return moment().month(name).format("M");
 };
+function getDayNumber(day){
+    return moment().date(day)
+}
+function getYear(date){
+    return moment().year(date)
+}
 
 function getNameOfWeekDay(payload,i){
     const a = moment(payload).date(i)
@@ -153,7 +159,73 @@ function createYearCalendar(rota, getMonthNumber, createMonth, calcPayDay, baseN
     return calcPayDay(yearCalendar);
 };
 
+function convertDaysArrayIntoRota(array, getDayNumber) {
+    let rota = {
+        year: null,
+        months: {
+            April: [],
+            May: [],
+            Jun: [],
+            July: [],
+            August: [],
+            September: [],
+            October: [],
+            November: [],
+            December: [],
+            January: [],
+            February: [],
+            March: []
+        }
+    }
+    if (array.length != 0) {
+        array.forEach((day) => {
+            switch (getMonthName(day)) {
+                case "January":
+                    rota.months.January.push(getDayNumber(day))
+                    break;
+                case "February":
+                    rota.months.February.push(getDayNumber(day))
+                    break;
+                case "March":
+                    rota.months.March.push(getDayNumber(day))
+                    break;
+                case "April":
+                    rota.months.April.push(getDayNumber(day))
+                    break;
+                case "May":
+                    rota.months.May.push(getDayNumber(day))
+                    break;
+                case "June":
+                    rota.months.June.push(getDayNumber(day))
+                    break;
+                case "July":
+                    rota.months.July.push(getDayNumber(day))
+                    break;
+                case "August":
+                    rota.months.August.push(getDayNumber(day))
+                    break;
+                case "September":
+                    rota.months.September.push(getDayNumber(day))
+                    break;
+                case "October":
+                    rota.months.October.push(getDayNumber(day))
+                    break;
+                case "November":
+                    rota.months.November.push(getDayNumber(day))
+                    break;
+                case "December":
+                    rota.months.December.push(getDayNumber(day))
+                    break;
+                default:
+                    break;
+            }
+        })
+        return rota
+    }
+}
+
 module.exports = {
+    convertDaysArrayIntoRota,
     extractDateFromString,
     returnDate,
     getMonthName,
@@ -165,4 +237,6 @@ module.exports = {
     createYearCalendar,
     addPDandCOD,
     addId,
+    getDayNumber,
+    getYear,
 };
