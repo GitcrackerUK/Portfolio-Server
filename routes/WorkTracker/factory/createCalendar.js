@@ -24,13 +24,9 @@ function getNameOfWeekDay(payload, i) {
     return moment(payload).date(i).format('dddd');
 }
 
-function extractDateFromString(str){
-    let date = [];
-    str.split(/[/" ":]/).forEach((i)=>{
-        date.push(parseInt(i))
-    })
-    return date
-};
+function extractDateFromString(str) {
+    return str.split(/[/" ":]/).map(i => parseInt(i));
+}
 
 function returnDate(dateArg, extractDateFromString, day, startTime){
     let payload = [];
