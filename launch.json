@@ -4,9 +4,10 @@
       {
         "type": "node",
         "request": "launch",
-        "name": "Launch Program",
+        "name": "Debugger1",
         "skipFiles": ["<node_internals>/**"],
-        "program": "${workspaceFolder}/server.js" // Replace with your entry file
+        "outFiles":"${workspaceFolder}/**/*.js",
+        "program": "${workspaceFolder}/Tracker.js"
       }
     ]
   }

@@ -7,7 +7,7 @@
         "dev": "jest && node ./routes/WorkTracker/Tracker.js",
         "test": "jest",
         "start": "node server.js",
-        "live": "nodemon --ext js server.js",
+        "live": "nodemon --watch routes --ext js,json --ignore node_modules --ignore logs --ignore routes/WorkTracker/store/overtimes.json --ignore routes/WorkTracker/store/fullYear24_25.json --verbose --exec node server.js",
         "function": "npx @google-cloud/functions-framework --target=getVisitors --source=Functions/index.js"
     },
     "author": "",
@@ -26,7 +26,7 @@
         "mongodb": "^3.6.4",
         "mongoose": "^5.11.15",
         "nodemailer": "^6.4.18",
-        "nodemon": "^2.0.7",
+        "nodemon": "^3.1.7",
         "socket.io": "^3.1.2",
         "uuid": "^9.0.0"
     },

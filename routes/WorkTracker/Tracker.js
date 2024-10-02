@@ -25,7 +25,20 @@ const { writeToResults, writeToFile, checkIfOvertime } = require('./factory/deve
 const { Rota24_25, baseCurrentRate, weekCombinations, rates } = require('./store/store.js');
 const FY = require('./store/fullYearCalendar.json');
 
+// This is express Api for workTracker which will be used to send tax year
+// rota and will be used to fetch full tax year of data, to front end to fill
+// up calendar page.
+
+// What I need to do ? 
+// I need to:
+// 1. Create Api request sent form front-end to server
+// 2. Create functionality to receive the front-end request.
+// 3. Use rota from the request to generate the full year of data.
+// 4. Send the full year of the data to the front-end within the same request.
+
+
 router.get('/', (req, res) => {
+    console.log(req.body);
     res.send('Tracker router');
 });
 router.post('/', (req, res) => {
@@ -43,6 +56,11 @@ router.post('/', (req, res) => {
     //     })
     // }
 });
+
+router.post('/', (req,res,next) => { 
+    console.log('loading.');
+    res.send('Post workTracker!!----->');
+})
 
 router.use('/register', register);
 router.use('/login', login);
