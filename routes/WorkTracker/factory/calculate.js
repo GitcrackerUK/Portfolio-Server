@@ -29,9 +29,9 @@ function getHoursFromStart( getFinishBasic, getDuration, start_Time ){
     const startTime = moment(start_Time);
     let finishBasicTime = getFinishBasic(start_Time);
 
-    const dayRateTime = returnTime(startTime,06,00);
-    const nightRateTime = returnTime(startTime,22,00);
-    const weekendRateTime = returnTime(startTime,00,00);
+    const dayRateTime = returnTime(startTime,0o06,0o00);
+    const nightRateTime = returnTime(startTime,22,0o00);
+    const weekendRateTime = returnTime(startTime,0o00,0o00);
 
     const times = {
         nightHours:null,
@@ -42,7 +42,7 @@ function getHoursFromStart( getFinishBasic, getDuration, start_Time ){
 
     function weekDay(start_Time){
         
-        if ( start_Time.isSameOrAfter(returnTime(start_Time,00,00)) && start_Time.isBefore(dayRateTime) ){
+        if ( start_Time.isSameOrAfter(returnTime(start_Time,0o00,0o00)) && start_Time.isBefore(dayRateTime) ){
             times.nightHours = dayRateTime.diff(start_Time,'minutes') / 60;
             times.dayHours = finishBasicTime.diff(dayRateTime,'minutes') / 60;
         }
@@ -68,7 +68,7 @@ function getHoursFromStart( getFinishBasic, getDuration, start_Time ){
     }
     
     function friday(start_Time){
-        if ( start_Time.isSameOrAfter(returnTime(start_Time,00,00)) && start_Time.isBefore(dayRateTime) ){
+        if ( start_Time.isSameOrAfter(returnTime(start_Time,0o00,0o00)) && start_Time.isBefore(dayRateTime) ){
             times.nightHours = dayRateTime.diff(start_Time,'minutes') / 60;
             times.dayHours = finishBasicTime.diff(dayRateTime,'minutes') / 60;
         }
